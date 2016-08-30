@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: DboLhhG1jyLRxD7uXJp5LdgAn5bseMeZok+aSIcKBrS29/YV6z4eTDcAaul/fmhEUQe7jpTC1wPRTMBg9NN/Uu944ArVKXApCCjf1yZugzFGCr9almT/sL72T0MqIMYlAqKgUvOvDdb2+L3f1B73Sx8QcGsc9HHINzKirPeff4vrcWudAS87c7aIH4S1yQZrcK4k3ppLSLCDjfsz+uKY4tWswoMz6pZ+b9L2SkeH+ycECBayexcQVGkhiTOrHK5/GrZoYLRHGOa41TBs6tnRZgBWCinMoDvoTkrfJHHBktHMslPiMEFTyB+qezUl3jqmJOff6F53hKN3C+1aDYPp2JQ1JVX08Em9OIAyPm056f6JF3MVawwCUiolKS6A+747cHfNz7ode/lA9mSl9DWs4T/lZJkNJvrbfJ8tB6mPxeV4/q4cqKXini+3lfzzcSc6ji/c7x0CuqyUixqUeN7jhD7WwWZrRkWb2Vmth53pmgPESPHIniKQGxAMPPrehV0CAtNDmTFO9TDXbUFKOkrW2RooVkxexBycuFmk1Olzwcurbr0peE8/U+uciDe08kwHYgcI7AgUjmH1UBah71Vgqm2S0Cf7WybuL/HTII6BpK0mfpq6aq6mpIrBAHBo9mIZn4cbTvelLq/eE7SJTvhczFytOL0hUwNA78QXnt1lljg=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/The-Method-by-Which-the-Causes-of-the-Present-and-Past-Conditions-of-Organic-Nature-Are-to-Be-__2923
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
