@@ -1,5 +1,8 @@
 _repo: The-Method-by-Which-the-Causes-of-the-Present-and-Past-Conditions-of-Organic-Nature-Are-to-Be-__2923
-_version: 0.1.0
+_version: 0.2.0
+covers:
+- cover_type: generated
+  image_path: cover.png
 creator:
   author:
     agent_name: Huxley, Thomas Henry
@@ -10,6 +13,8 @@ creator:
     url: http://www.gutenberg.org/2009/agents/595
     wikipedia: http://en.wikipedia.org/wiki/Thomas_Henry_Huxley
 description: ''
+edition_identifiers:
+  edition_id: http://www.gutenberg.org/ebooks/2923#The-Method-by-Which-the-Causes-of-the-Present-and-Past-Conditions-of-Organic-Nature-Are-to-Be-_
 gutenberg_issued: '2001-11-01'
 gutenberg_type: Text
 identifiers:
